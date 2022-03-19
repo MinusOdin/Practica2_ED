@@ -4,35 +4,35 @@
 using namespace std;
 
 CuaEstatica::CuaEstatica(const int max_size){
-    int data[max_size];
-    this->_data = data;
+    this->_data = new int[max_size];
     this->_size = 0;
     this->_front = 0;
-    this->_rear = -1;
+    this->_rear = 0;
     this->_max_size = max_size;
 }
 
-CuaEstatica::~CuaEstatica(){}
+CuaEstatica::~CuaEstatica(){
+    delete _data;
+}
 
 void CuaEstatica::enqueue(const int key){
     if(isFull()) throw out_of_range("EXCEPTION: L'estructura esta plena");
     else{
-        _rear ++;
         _data[_rear] = key;
+        _rear ++;
+        if(_rear == _max_size ) _rear = 0;
         _size++;
-        cout << "Element " << key << "agregat" << endl;
+        cout << "Element " << key << " agregat" << endl;
     }
 }
 
 void CuaEstatica::dequeue(){
     if(isEmpty()) throw out_of_range("EXCEPTION: L'estructura esta buida");
     else{
-        cout << "Element " << *(_data) << "eliminat" << endl;
-        _front--;
+        cout << "Element " << _data[_front] << " eliminat" << endl;
+        _front++;
+        if (_front == _max_size ) _front = 0;
         _size--;
-        for(int i = 0; i <= size; i++){
-            _data + i = *(_data + i)
-        }
     }
 }
 
@@ -46,18 +46,21 @@ bool CuaEstatica::isEmpty(){
 
 void CuaEstatica::print(){
     cout<< "[";
-    for (int i = 0; i <= _size; i++){
-        if (i == _size) cout<<_data[i];
-        else cout<< _data[i] << ", ";
+    int aux = _front;
+    for (int i = 0; i < _size; i++){
+        if ( i == _size - 1) cout<<_data[aux % _size];
+        else cout<< _data[aux % _size] << ", ";
+        aux++;
     }
-    cout << endl;
+    cout <<"]" << endl;
 }
 
 const int CuaEstatica::getFront(){
-    return _data[_front];
+    if (isEmpty()) throw new out_of_range("EXCEPTION: L'estructura esta buida");
+    else return _data[_front];
 }
 
 void CuaEstatica::printFrontRear(){
-    if (isEmpty()) cout<< "Front: " << 0 <<", Rear: " << 0;
-    else cout<< "Front: " << _data[_front] <<", Rear: " << _data[_rear];
+    if (isEmpty()) cout<< "Front: " << 0 <<", Rear: " << 0 <<endl;
+    else cout<< "Front: " << _front <<", Rear: " << _rear <<endl;
 }

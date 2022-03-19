@@ -1,15 +1,14 @@
+#include "CuaEncadenada.h"
 #include <iostream>
 #include <vector>
-#include "CuaEstatica.h"
 
 using namespace std;
 
 void casProva1(){
-    CuaEstatica cua(3);
+    CuaEncadenada<int> cua;
     try{
         cua.enqueue(10);
         cua.enqueue(20);
-        cua.printFrontRear();
         cua.enqueue(30);
         cua.enqueue(40);
     }catch(out_of_range &e){
@@ -17,18 +16,16 @@ void casProva1(){
     }
     cua.print();
     try{
-        cua.printFrontRear();
         cua.dequeue();
         cua.enqueue(50);
         cua.print();
-        cua.printFrontRear();
     }catch(out_of_range &e){
         cerr<< e.what() << endl;
     }
 }
 
 void casProva2(){
-    CuaEstatica cua(3);
+    CuaEncadenada<int> cua;
     try{
         cua.enqueue(10);
         cout << cua.getFront() << endl;
@@ -39,18 +36,15 @@ void casProva2(){
     }
     cua.print();
     try{
-        cua.printFrontRear();
         cua.dequeue();
         cout << cua.getFront() << endl;
         cua.dequeue();
-        cua.printFrontRear();
         cua.dequeue();
         cua.dequeue();
     }catch(out_of_range &e){
         cerr<< e.what() << endl;
     }
     cua.print();
-    cua.printFrontRear();
 }
 
 void imprimirOpcions(vector<string> opcions){
@@ -65,10 +59,10 @@ void demanarOpcio(int &opcio){
 }
 
 int main(){
-    CuaEstatica cua(3);
+    CuaEncadenada<int> cua;
     int opcio = 0;
-    vector<string> opcions = { "Inserir element a la cua", "Treure element de la cua", "Consultar el primer element", "Imprimir tot el contingut de la CuaEstatica", "Imprimir les posicions del front i el rear", "Sortir"};
-    while(opcio != 6){
+    vector<string> opcions = { "Inserir element a la cua", "Treure element de la cua", "Consultar el primer element", "Imprimir tot el contingut de la CuaEstatica", "Sortir"};
+    while(opcio != 5){
         imprimirOpcions(opcions);
         demanarOpcio(opcio);
         switch (opcio){
@@ -98,9 +92,6 @@ int main(){
                 break;
             case 4:
                 cua.print();
-                break;
-            case 5:
-                cua.printFrontRear();
                 break;
         }
     }
